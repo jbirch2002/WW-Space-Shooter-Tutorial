@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://1hbdntrt7nwd"]
+
+[ext_resource type="Texture2D" uid="uid://cke4202f2asfk" path="res://Assets/Space/Backgrounds/darkPurple.png" id="1_6sov7"]
+[ext_resource type="Script" path="res://Scripts/world.gd" id="1_i45gm"]
+[ext_resource type="PackedScene" uid="uid://diuq1xu2sa3uh" path="res://Scenes/player.tscn" id="2_02gbi"]
+[ext_resource type="PackedScene" uid="uid://dldeybtbfpncx" path="res://Scenes/enemy_spawner.tscn" id="2_su2jv"]
+
+[node name="World" type="Node"]
+script = ExtResource("1_i45gm")
+
+[node name="Node2D" type="Node2D" parent="."]
+texture_repeat = 2
+
+[node name="Background" type="Sprite2D" parent="Node2D"]
+texture_repeat = 2
+texture = ExtResource("1_6sov7")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 540, 960)
+
+[node name="EnemySpawner" parent="." instance=ExtResource("2_su2jv")]
+
+[node name="Player" parent="." instance=ExtResource("2_02gbi")]
+position = Vector2(276, 871)
+
+[node name="Score" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+scale = Vector2(1.69662, 2.04582)
+text = "Score: 0"
+
+[connection signal="add_score" from="EnemySpawner" to="." method="score_increase"]
+[connection signal="give_player_power_up" from="EnemySpawner" to="Player" method="collect_power_up"]
+[connection signal="spawn_laser" from="Player" to="." method="_on_player_spawn_laser"]

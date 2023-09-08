@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://0xwrq6aq2xma"]
+
+[ext_resource type="Script" path="res://PowerUp.gd" id="1_yc3kd"]
+[ext_resource type="Texture2D" uid="uid://clcqegbtw6crv" path="res://Assets/Space/PNG/Effects/star3.png" id="2_x2asm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xon32"]
+radius = 13.0
+
+[node name="PowerUp" type="Area2D" groups=["power_up"]]
+collision_mask = 2
+script = ExtResource("1_yc3kd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_x2asm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xon32")
+
+[connection signal="area_entered" from="." to="." method="_on_power_up_area_entered"]
