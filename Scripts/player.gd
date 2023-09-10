@@ -3,25 +3,26 @@ class_name Player
 
 signal spawn_laser(location)
 
-@export var speed = 300
+@export var speed: float = 300
+@export var min_distance: float = 10
 @export var health = 3
 @export var power_up_duration = 5
 @onready var muzzle = $Muzzle
+@onready var power_up_timer = $PowerUpEnd
 
-var input_vector = Vector2.ZERO 
 var has_power_up = false
-var current_direction = Vector2.UP
-
 
 func _physics_process(delta):
 	player_controls(delta)
 
 func player_controls(delta):
-	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-	input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
+	var target_position: Vector2 = get_global_mouse_position()
+	var distance_to_target: float = global_position.distance_to(target_position)
 	
-	global_position += input_vector * speed * delta
-	
+	if distance_to_target > min_distance:
+		var direction: Vector2 = (target_position - global_position).normalized()
+		global_position += direction * speed * delta
+
 	if Input.is_action_just_pressed("shoot"):
 		shoot_laser()
 	elif has_power_up:
@@ -41,7 +42,7 @@ func shoot_laser():
 
 func collect_power_up():
 	has_power_up = true
-	$PowerUpEnd.start(power_up_duration)
+	power_up_timer.start(power_up_duration)
 
 func _on_power_up_end_timeout():
 	has_power_up = false

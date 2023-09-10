@@ -9,16 +9,16 @@ collision_layer = 2
 collision_mask = 21
 script = ExtResource("1_dijci")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_cmlnn")
-
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-50, -5, -47, 24, -44, 25, -41, 21, -14, 28, -7, 38, 7, 38, 14, 28, 41, 21, 43, 25, 46, 25, 50, -5, 45, -7, 36, 2, 13, -12, 9, -38, -9, -38, -12, -12, -36, 1, -46, -7)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_cmlnn")
 
 [node name="Muzzle" type="Marker2D" parent="."]
 
 [node name="PowerUpEnd" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 3.0
 
 [connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
 [connection signal="timeout" from="PowerUpEnd" to="." method="_on_power_up_end_timeout"]
