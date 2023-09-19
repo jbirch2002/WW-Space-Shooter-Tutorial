@@ -1,68 +1,37 @@
-[gd_scene load_steps=10 format=3 uid="uid://1hbdntrt7nwd"]
+[gd_scene load_steps=6 format=3 uid="uid://1hbdntrt7nwd"]
 
-[ext_resource type="Texture2D" uid="uid://cke4202f2asfk" path="res://Assets/Space/Backgrounds/darkPurple.png" id="1_6sov7"]
-[ext_resource type="Script" path="res://Scripts/world.gd" id="1_i45gm"]
-[ext_resource type="PackedScene" uid="uid://diuq1xu2sa3uh" path="res://Scenes/player.tscn" id="2_02gbi"]
-[ext_resource type="PackedScene" uid="uid://dldeybtbfpncx" path="res://Scenes/enemy_spawner.tscn" id="2_su2jv"]
+[ext_resource type="Script" path="res://Scripts/world.gd" id="1_p7wcx"]
+[ext_resource type="Texture2D" uid="uid://cke4202f2asfk" path="res://Assets/Space/Backgrounds/darkPurple.png" id="2_qo5u2"]
+[ext_resource type="PackedScene" uid="uid://dldeybtbfpncx" path="res://Scenes/enemy_spawner.tscn" id="3_4kpvq"]
+[ext_resource type="PackedScene" uid="uid://diuq1xu2sa3uh" path="res://Scenes/player.tscn" id="4_ta2uu"]
+[ext_resource type="PackedScene" uid="uid://bpx237g5btk0t" path="res://Scenes/pause_menu.tscn" id="5_k5yv6"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2v0rh"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vug80"]
-size = Vector2(552, 20)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j3ys6"]
-size = Vector2(30.5, 970)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wdi11"]
-size = Vector2(30.5, 970)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hqevl"]
-size = Vector2(552, 20)
-
-[node name="World" type="Node"]
-script = ExtResource("1_i45gm")
-
-[node name="Node2D" type="Node2D" parent="."]
+[node name="World" type="Node2D"]
+process_mode = 1
 texture_repeat = 2
+script = ExtResource("1_p7wcx")
 
-[node name="Background" type="Sprite2D" parent="Node2D"]
-texture_repeat = 2
-texture = ExtResource("1_6sov7")
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_qo5u2")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 540, 960)
 
-[node name="EnemySpawner" parent="." instance=ExtResource("2_su2jv")]
+[node name="EnemySpawner" parent="." instance=ExtResource("3_4kpvq")]
+
+[node name="Player" parent="." instance=ExtResource("4_ta2uu")]
+position = Vector2(277, 878)
 
 [node name="Score" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-scale = Vector2(1.69662, 2.04582)
+offset_left = 19.0
+offset_top = 21.0
+offset_right = 80.0
+offset_bottom = 47.0
 text = "Score: 0"
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-collision_mask = 2
-physics_material_override = SubResource("PhysicsMaterial_2v0rh")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(266, 0)
-shape = SubResource("RectangleShape2D_vug80")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(556, 477)
-shape = SubResource("RectangleShape2D_j3ys6")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(0, 477)
-shape = SubResource("RectangleShape2D_wdi11")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(276, 960)
-shape = SubResource("RectangleShape2D_hqevl")
-
-[node name="Player" parent="." instance=ExtResource("2_02gbi")]
-position = Vector2(276, 871)
-monitoring = false
+[node name="PauseMenu" parent="." instance=ExtResource("5_k5yv6")]
+process_mode = 2
+visible = false
 
 [connection signal="add_score" from="EnemySpawner" to="." method="score_increase"]
 [connection signal="give_player_power_up" from="EnemySpawner" to="Player" method="collect_power_up"]

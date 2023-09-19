@@ -11,9 +11,10 @@ config_version=5
 [application]
 
 config/name="Ww Space Shooter Tutorial"
-run/main_scene="res://Scenes/world.tscn"
+run/main_scene="res://Scenes/main_menu.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
+run/canvas_textures/default_texture_filter=1
 
 [display]
 
@@ -57,3 +58,7 @@ shoot={
 2d_physics/layer_3="enemy"
 2d_physics/layer_4="player_laser"
 2d_physics/layer_5="enemy_laser"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

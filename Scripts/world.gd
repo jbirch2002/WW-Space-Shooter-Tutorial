@@ -12,3 +12,12 @@ func score_increase():
 	score += 10
 	$Score.text = "SCORE: " + str(score)
 
+func pause():
+	if Input.is_action_just_pressed("pause"):
+		get_tree().paused = true
+		$PauseMenu.show()
+	
+func unpause():
+	if Input.is_action_just_pressed("pause"):
+		$PauseMenu.hide()
+		get_tree().paused = false
